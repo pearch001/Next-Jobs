@@ -1,7 +1,7 @@
 package com.NextJobs.NextJobsapi.model.entities;
 
+import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -75,4 +75,7 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
+
+
 }
