@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class User_ServiceImpl implements User_Service, UserDetailsService {
+public class User_ServiceImpl implements User_Service {
     private final UserDao userDao;
 
 
