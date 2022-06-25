@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/nextjobs/v1/signup")
@@ -26,4 +23,12 @@ public class SignUpController {
         return new ResponseEntity<>(new ApiResponse(true,"Student registered"), HttpStatus.ACCEPTED);
 
     }
+
+    @GetMapping(path = "confirm")
+    public ResponseEntity<ApiResponse> confirmToken(@RequestParam("token") String token) {
+        signUpService.confirmToken(token);
+        return new ResponseEntity<>(new ApiResponse(true,"Email Confirmed"), HttpStatus.ACCEPTED);
+
+    }
+
 }

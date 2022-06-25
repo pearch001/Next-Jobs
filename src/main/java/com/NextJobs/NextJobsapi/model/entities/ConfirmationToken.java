@@ -36,4 +36,14 @@ public class ConfirmationToken {
             name = "app_user_id"
     )
     private AppUser appUser;
+
+    public ConfirmationToken(String token,
+                             LocalDateTime createdAt,
+                             LocalDateTime expiresAt,
+                             AppUser appUser) {
+        this.token = token;
+        this.createdAt = createdAt;
+        this.expiresAt = expiresAt;
+        this.appUser = appUser;
+    }
 }
