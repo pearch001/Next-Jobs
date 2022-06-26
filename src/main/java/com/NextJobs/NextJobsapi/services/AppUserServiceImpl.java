@@ -60,7 +60,7 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
         appUserDao.save(appUser);
 
         String token = UUID.randomUUID().toString();
-
+        log.info("Before Confirmation Token");
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
@@ -70,7 +70,7 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
         confirmationTokenService.saveConfirmationToken(
                 confirmationToken);
-        return null;
+        return token;
     }
     public int enableAppUser(String email) {
         return appUserDao.enableAppUser(email);
