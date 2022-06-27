@@ -1,0 +1,13 @@
+{
+  "name": "Next Jobs",
+  "env": {
+    "SMTP_USER": {"required":  false},
+    "SMTP_PASSWORD": {"required":  false},
+    "JWT_SECRET": {"required":  false}
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/maven"
+    }
+  ]
+}
