@@ -19,8 +19,8 @@ public class SignUpController {
 
     @PostMapping
     public ResponseEntity<ApiResponse> signup(@RequestBody SignUpRequest request) {
-        signUpService.register(request);
-        return new ResponseEntity<>(new ApiResponse(true,"Student registered"), HttpStatus.ACCEPTED);
+        String Link = signUpService.register(request);
+        return new ResponseEntity<>(new ApiResponse(true,Link), HttpStatus.ACCEPTED);
 
     }
 
