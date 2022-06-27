@@ -1,12 +1,13 @@
-package com.NextJobs.NextJobsapi.services;
+package com.NextJobs.NextJobsapi.utils;
 
 import com.NextJobs.NextJobsapi.model.entities.facebook.FacebookUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Service
 public class FacebookClient {
 
     @Autowired
