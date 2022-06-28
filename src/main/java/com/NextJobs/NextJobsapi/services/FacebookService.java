@@ -1,6 +1,8 @@
 package com.NextJobs.NextJobsapi.services;
 
+import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.facebook.FacebookUser;
+import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
 import com.NextJobs.NextJobsapi.utils.FacebookClient;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,7 @@ public class FacebookService {
         var facebookUser = facebookClient.getUser(fbAccessToken);
 
         return userService.findById(facebookUser.getId())
-                .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), Role.FACEBOOK_USER)))
+                .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), AppUserRole.NEWUSER)))
                 .map(InstaUserDetails::new)
                 .map(userDetails -> new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()))
@@ -29,17 +31,12 @@ public class FacebookService {
                         new InternalServerException("unable to login facebook user id " + facebookUser.getId()));
     }
 
-    private User convertTo(FacebookUser facebookUser) {
-        return User.builder()
+    private AppUser convertTo(FacebookUser facebookUser) {
+        return AppUser.builder()
                 .id(facebookUser.getId())
                 .email(facebookUser.getEmail())
                 .username(generateUsername(facebookUser.getFirstName(), facebookUser.getLastName()))
                 .password(generatePassword(8))
-                .userProfile(Profile.builder()
-                        .displayName(String
-                                .format("%s %s", facebookUser.getFirstName(), facebookUser.getLastName()))
-                        .profilePictureUrl(facebookUser.getPicture().getData().getUrl())
-                        .build())
                 .build();
     }
 

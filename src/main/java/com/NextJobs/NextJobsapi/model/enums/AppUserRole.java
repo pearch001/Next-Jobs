@@ -5,5 +5,5 @@ public enum AppUserRole {
     NEWUSER,
     ExVOLUNTEER,
     ORGANIZATION,
-    JOBSEEKER
+    INDIVIDUAL
 }
