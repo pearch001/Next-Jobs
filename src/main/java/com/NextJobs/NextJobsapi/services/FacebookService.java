@@ -1,5 +1,7 @@
 package com.NextJobs.NextJobsapi.services;
 
+import com.NextJobs.NextJobsapi.dao.AppUserDao;
+import com.NextJobs.NextJobsapi.exceptions.InternalServerException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.facebook.FacebookUser;
 import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
@@ -9,23 +11,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.Random;
+
 @Service
 @Slf4j
 public class FacebookService {
 
     @Autowired
     private FacebookClient facebookClient;
-    @Autowired private UserService userService;
+    @Autowired private AppUserServiceImpl appUserService;
     @Autowired private JwtTokenUtil tokenProvider;
+
+    @Autowired
+    private AppUserDao appUserDao;
 
     public String loginUser(String fbAccessToken) {
         var facebookUser = facebookClient.getUser(fbAccessToken);
 
-        return userService.findById(facebookUser.getId())
-                .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), AppUserRole.NEWUSER)))
-                .map(InstaUserDetails::new)
-                .map(userDetails -> new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()))
+        return appUserDao.findByEmail(facebookUser.getEmail())
+                .or(() -> Optional.ofNullable(appUserService.registerUser(convertTo(facebookUser), AppUserRole.NEWUSER)))
                 .map(tokenProvider::generateToken)
                 .orElseThrow(() ->
                         new InternalServerException("unable to login facebook user id " + facebookUser.getId()));
@@ -35,7 +40,8 @@ public class FacebookService {
         return AppUser.builder()
                 .id(facebookUser.getId())
                 .email(facebookUser.getEmail())
-                .username(generateUsername(facebookUser.getFirstName(), facebookUser.getLastName()))
+                .firstName(facebookUser.getFirstName())
+                .lastName(facebookUser.getLastName())
                 .password(generatePassword(8))
                 .build();
     }

@@ -4,6 +4,7 @@ import com.NextJobs.NextJobsapi.dao.AppUserDao;
 import com.NextJobs.NextJobsapi.exceptions.UserExistException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
+import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
 import com.NextJobs.NextJobsapi.model.requests.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +53,9 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
             throw new UserExistException("email already taken");
         }
 
-        String encodedPassword = bCryptPasswordEncoder
-                .encode(appUser.getPassword());
 
-        appUser.setPassword(encodedPassword);
+
+        appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
 
         appUserDao.save(appUser);
 
@@ -75,4 +75,24 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
     public int enableAppUser(String email) {
         return appUserDao.enableAppUser(email);
     }
+
+    public AppUser registerUser(AppUser user, AppUserRole role) {
+        log.info("registering user {}", user.getUsername());
+
+        if(appUserDao.findByEmail(user.getEmail()).isPresent()) {
+            log.warn("username {} already exists.", user.getUsername());
+
+            throw new UserExistException(
+                    String.format("username %s already exists", user.getUsername()));
+        }
+
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setAppUserRole(role);
+
+
+        return appUserDao.save(user);
+    }
+
+
 }

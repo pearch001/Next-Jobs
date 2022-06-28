@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +53,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
         //generate token for user
         public String generateToken(UserDetails userDetails) {
             Map<String, Object> claims = new HashMap<>();
+            claims.put("", userDetails.getAuthorities());
             return doGenerateToken(claims, userDetails.getUsername());
         }
 

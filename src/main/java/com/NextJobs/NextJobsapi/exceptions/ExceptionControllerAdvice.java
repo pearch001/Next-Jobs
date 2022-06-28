@@ -16,4 +16,9 @@ public class ExceptionControllerAdvice {
     public final ResponseEntity<String> handleUserExistException(UserExistException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = InternalServerException.class)
+    public final ResponseEntity<String> handleInternalServerError(InternalServerException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

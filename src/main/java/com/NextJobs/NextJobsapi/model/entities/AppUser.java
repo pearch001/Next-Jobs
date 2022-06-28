@@ -17,6 +17,7 @@ import java.util.Collections;
 @AllArgsConstructor
 @Entity(name="AppUser")
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class AppUser implements UserDetails {
 
     @Id
