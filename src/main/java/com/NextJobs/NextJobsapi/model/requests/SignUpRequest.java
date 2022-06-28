@@ -2,10 +2,7 @@ package com.NextJobs.NextJobsapi.model.requests;
 
 import lombok.*;
 
-@Getter
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 public class SignUpRequest {
     private final String firstName;
     private final String lastName;

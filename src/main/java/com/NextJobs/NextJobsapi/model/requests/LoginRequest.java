@@ -1,7 +1,10 @@
 package com.NextJobs.NextJobsapi.model.requests;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotEmpty;
 
+@Data
 public class LoginRequest {
 
     @NotEmpty
