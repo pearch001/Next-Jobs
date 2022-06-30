@@ -21,4 +21,9 @@ public class ExceptionControllerAdvice {
     public final ResponseEntity<String> handleInternalServerError(InternalServerException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(value =  AuthenticationFailException.class)
+    public final ResponseEntity<String> handleCustomException(AuthenticationFailException authenticationFailException){
+        return new ResponseEntity<>(authenticationFailException.getMessage(),HttpStatus.BAD_REQUEST);
+    }
 }
