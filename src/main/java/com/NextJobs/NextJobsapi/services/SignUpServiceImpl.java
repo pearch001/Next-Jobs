@@ -44,9 +44,9 @@ public class SignUpServiceImpl implements SignUpServiceInt{
         String token = appUserService.signup(appUser);
 
         String link = "https://next-jobs.herokuapp.com/nextjobs/v1/signup/confirm?token=" + token;
-        emailSenderService.send(
+        /*emailSenderService.send(
                 request.getEmail(),
-                buildEmail(request.getFirstName(), link));
+                buildEmail(request.getFirstName(), link));*/
 
         return link;
     }
