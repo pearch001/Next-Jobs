@@ -1,8 +1,11 @@
 package com.NextJobs.NextJobsapi.api;
 
+import com.NextJobs.NextJobsapi.exceptions.AuthenticationFailException;
 import com.NextJobs.NextJobsapi.model.JwtRequest;
 import com.NextJobs.NextJobsapi.model.JwtResponse;
+import com.NextJobs.NextJobsapi.model.requests.FacebookLoginRequest;
 import com.NextJobs.NextJobsapi.services.AppUserServiceImpl;
+import com.NextJobs.NextJobsapi.services.FacebookService;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +20,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping("/nextjobs/v1/signin")
+@RequestMapping("/nextjobs/v1")
 @RestController
 public class SignInController {
 
     @Autowired
     private AppUserServiceImpl appUserService;
+
+    @Autowired
+    private FacebookService facebookService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
-    @PostMapping(value="/login")
+    @PostMapping(value="/signin")
     public ResponseEntity<?> login(@RequestBody JwtRequest authenticationRequest) throws Exception {
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -40,5 +47,11 @@ public class SignInController {
         final UserDetails userDetails = appUserService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(jwt));
+    }
+    @PostMapping("/facebook/signin")
+    public  ResponseEntity<?> facebookAuth(@RequestBody FacebookLoginRequest facebookLoginRequest) {
+        log.info("facebook login {}", facebookLoginRequest);
+        String token = facebookService.loginUser(facebookLoginRequest.getAccessToken());
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 }
