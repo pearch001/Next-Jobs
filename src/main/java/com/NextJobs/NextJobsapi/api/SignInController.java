@@ -4,6 +4,8 @@ import com.NextJobs.NextJobsapi.exceptions.AuthenticationFailException;
 import com.NextJobs.NextJobsapi.model.JwtRequest;
 import com.NextJobs.NextJobsapi.model.JwtResponse;
 import com.NextJobs.NextJobsapi.model.requests.FacebookLoginRequest;
+import com.NextJobs.NextJobsapi.model.requests.GoogleLoginRequest;
+import com.NextJobs.NextJobsapi.model.requests.LinkedInLoginRequest;
 import com.NextJobs.NextJobsapi.services.AppUserServiceImpl;
 import com.NextJobs.NextJobsapi.services.FacebookService;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
@@ -52,6 +54,20 @@ public class SignInController {
     public  ResponseEntity<?> facebookAuth(@RequestBody FacebookLoginRequest facebookLoginRequest) {
         log.info("facebook login {}", facebookLoginRequest);
         String token = facebookService.loginUser(facebookLoginRequest.getAccessToken());
+        return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @PostMapping("/google/signin")
+    public  ResponseEntity<?> googleAuth(@RequestBody GoogleLoginRequest googleLoginRequest) {
+        log.info("facebook login {}", googleLoginRequest);
+        String token = facebookService.loginUser(googleLoginRequest.getAccessToken());
+        return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @PostMapping("/linkedIn/signin")
+    public  ResponseEntity<?> linkedInAuth(@RequestBody LinkedInLoginRequest linkedInLoginRequest) {
+        log.info("facebook login {}", linkedInLoginRequest);
+        String token = facebookService.loginUser(linkedInLoginRequest.getAccessToken());
         return ResponseEntity.ok(new JwtResponse(token));
     }
 }

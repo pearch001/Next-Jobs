@@ -56,10 +56,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         // We don't need CSRF for this example
         httpSecurity.csrf().disable()
                 // do not authenticate this particular request
-                .authorizeRequests().antMatchers("/api/v1/users/login","/auth/**",
+                .authorizeRequests().antMatchers("/nextjobs/v1/signin","/auth/**",
                         "/v2/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-resources/**",
+                        "/nextjobs/v1/signin/facebook/signin",
+                        "/nextjobs/v1/signin/google/signin",
+                        "/nextjobs/v1/signin/linkedIn/signin",
                         "/configuration/**", "/nextjobs/v1/signup", "/nextjobs/v1/signup/**").permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
