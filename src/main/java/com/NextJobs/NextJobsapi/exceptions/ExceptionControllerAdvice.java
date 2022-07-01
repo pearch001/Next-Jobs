@@ -26,4 +26,9 @@ public class ExceptionControllerAdvice {
     public final ResponseEntity<String> handleCustomException(AuthenticationFailException authenticationFailException){
         return new ResponseEntity<>(authenticationFailException.getMessage(),HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = InvalidTokenException.class)
+    public final ResponseEntity<String> invalidTokenException(InvalidTokenException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

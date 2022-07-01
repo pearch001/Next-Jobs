@@ -5,7 +5,6 @@ import com.NextJobs.NextJobsapi.exceptions.UserExistException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
 import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
-import com.NextJobs.NextJobsapi.model.requests.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +71,8 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
                 confirmationToken);
         return token;
     }
-    public int enableAppUser(String email) {
-        return appUserDao.enableAppUser(email);
+    public void enableAppUser(String email) {
+        appUserDao.enableAppUser(email);
     }
 
     public AppUser registerUser(AppUser user, AppUserRole role) {

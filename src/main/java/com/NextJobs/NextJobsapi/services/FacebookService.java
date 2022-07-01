@@ -38,7 +38,6 @@ public class FacebookService {
 
     private AppUser convertTo(FacebookUser facebookUser) {
         return AppUser.builder()
-                .id(facebookUser.getId())
                 .email(facebookUser.getEmail())
                 .firstName(facebookUser.getFirstName())
                 .lastName(facebookUser.getLastName())

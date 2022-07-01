@@ -1,4 +1,5 @@
 package com.NextJobs.NextJobsapi.utils;
+import com.NextJobs.NextJobsapi.exceptions.InvalidTokenException;
 import com.NextJobs.NextJobsapi.model.entities.facebook.FacebookUser;
 import com.NextJobs.NextJobsapi.model.entities.google.GoogleUser;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -65,7 +66,7 @@ public class GoogleClient {
 
         } else {
             System.out.println("Invalid ID token.");
-            throw new In
+            throw new InvalidTokenException("Invalid ID token.");
         }
 
     }

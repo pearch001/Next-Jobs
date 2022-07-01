@@ -8,6 +8,7 @@ import com.NextJobs.NextJobsapi.model.requests.GoogleLoginRequest;
 import com.NextJobs.NextJobsapi.model.requests.LinkedInLoginRequest;
 import com.NextJobs.NextJobsapi.services.AppUserServiceImpl;
 import com.NextJobs.NextJobsapi.services.FacebookService;
+import com.NextJobs.NextJobsapi.services.GoogleService;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 @Slf4j
 @RequestMapping("/nextjobs/v1")
 @RestController
@@ -31,6 +35,9 @@ public class SignInController {
 
     @Autowired
     private FacebookService facebookService;
+
+    @Autowired
+    private GoogleService googleService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -58,9 +65,9 @@ public class SignInController {
     }
 
     @PostMapping("/google/signin")
-    public  ResponseEntity<?> googleAuth(@RequestBody GoogleLoginRequest googleLoginRequest) {
+    public  ResponseEntity<?> googleAuth(@RequestBody GoogleLoginRequest googleLoginRequest) throws GeneralSecurityException, IOException {
         log.info("facebook login {}", googleLoginRequest);
-        String token = facebookService.loginUser(googleLoginRequest.getAccessToken());
+        String token = googleService.loginUser(googleLoginRequest.getAccessToken());
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
