@@ -137,6 +137,12 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.32.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sendinblue</groupId>
+			<artifactId>sib-api-v3-sdk</artifactId>
+			<version>6.0.0</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 	<build>
