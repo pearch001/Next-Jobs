@@ -46,6 +46,7 @@ public class GoogleService {
                 .email(googleUser.getEmail())
                 .firstName(googleUser.getFirstName())
                 .lastName(googleUser.getLastName())
+                .enabled(true)
                 .password(generatePassword(8))
                 .imageUrl(googleUser.getPicture())
                 .build();

@@ -42,6 +42,7 @@ public class FacebookService {
                 .firstName(facebookUser.getFirstName())
                 .lastName(facebookUser.getLastName())
                 .password(generatePassword(8))
+                .enabled(true)
                 .imageUrl(facebookUser.getPicture().getData().getUrl())
                 .build();
     }
