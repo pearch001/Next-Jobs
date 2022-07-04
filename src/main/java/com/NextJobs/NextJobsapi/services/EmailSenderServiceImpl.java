@@ -51,7 +51,7 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         // Configure API key authorization: api-key
         ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
-        apiKey.setApiKey("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");
+        apiKey.setApiKey("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");
 
         try {
 
