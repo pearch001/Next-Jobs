@@ -1,7 +1,6 @@
 package com.NextJobs.NextJobsapi.services;
 
 import com.NextJobs.NextJobsapi.exceptions.EmailNotValidException;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,20 +15,21 @@ import sibModel.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 @Service
-@AllArgsConstructor
 @Slf4j
 public class EmailSenderServiceImpl implements EmailSenderServiceInt{
     private final JavaMailSender mailSender;
 
     @Value("${sendInBlue.secret}")
     private String secret;
+
+    public EmailSenderServiceImpl(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
 
     @Async
