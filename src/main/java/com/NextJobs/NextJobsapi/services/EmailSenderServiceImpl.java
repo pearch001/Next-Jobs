@@ -65,7 +65,7 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             toList.add(to);
             SendSmtpEmailReplyTo replyTo = new SendSmtpEmailReplyTo();
             replyTo.setEmail("kasimoluwasegun@gmail.com");
-            replyTo.setName("J ");
+            replyTo.setName("kasimoluwasegun@gmail.com");
             Properties headers = new Properties();
             headers.setProperty("Some-Custom-Name", "unique-id-1234");
             Properties params = new Properties();
