@@ -3,6 +3,7 @@ package com.NextJobs.NextJobsapi.services;
 import com.NextJobs.NextJobsapi.exceptions.EmailNotValidException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -27,6 +28,8 @@ import java.util.Properties;
 public class EmailSenderServiceImpl implements EmailSenderServiceInt{
     private final JavaMailSender mailSender;
 
+    @Value("${sendInBlue.secret}")
+    private String secret;
 
 
     @Async
@@ -51,7 +54,7 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         // Configure API key authorization: api-key
         ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
-        apiKey.setApiKey("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");
+        apiKey.setApiKey(secret);
 
         try {
 
