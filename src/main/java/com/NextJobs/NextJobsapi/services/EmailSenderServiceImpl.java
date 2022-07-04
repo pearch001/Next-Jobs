@@ -1,5 +1,6 @@
 package com.NextJobs.NextJobsapi.services;
 
+import com.NextJobs.NextJobsapi.exceptions.EmailNotValidException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -96,7 +97,8 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             CreateSmtpEmail response = api.sendTransacEmail(sendSmtpEmail);
             System.out.println(response.toString());
         } catch (Exception e) {
-            System.out.println("Exception occurred:- " + e.getMessage());
+            throw new EmailNotValidException("Exception occurred:- " + e.getMessage());
+
         }
     }
 
