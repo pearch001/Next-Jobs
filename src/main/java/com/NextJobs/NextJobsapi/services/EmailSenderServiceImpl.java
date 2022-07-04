@@ -1,6 +1,5 @@
 package com.NextJobs.NextJobsapi.services;
 
-import com.NextJobs.NextJobsapi.exceptions.EmailNotValidException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -51,14 +50,14 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         // Configure API key authorization: api-key
         ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
-        apiKey.setApiKey("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");
+        apiKey.setApiKey("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");
 
         try {
 
             TransactionalEmailsApi api = new TransactionalEmailsApi();
             SendSmtpEmailSender sender = new SendSmtpEmailSender();
             sender.setEmail("kasimoluwasegun@gmail.com");
-            sender.setName("Kasim Segun");
+            sender.setName("Next Jobs");
             List<SendSmtpEmailTo> toList = new ArrayList<SendSmtpEmailTo>();
             SendSmtpEmailTo to = new SendSmtpEmailTo();
             to.setEmail(top);
@@ -66,16 +65,20 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             toList.add(to);
             SendSmtpEmailReplyTo replyTo = new SendSmtpEmailReplyTo();
             replyTo.setEmail("kasimoluwasegun@gmail.com");
-            replyTo.setName("John Doe");
+            replyTo.setName("J ");
             Properties headers = new Properties();
             headers.setProperty("Some-Custom-Name", "unique-id-1234");
+            Properties params = new Properties();
+            params.setProperty("parameter", "");
+            params.setProperty("subject", "Confirm your email");
             SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
             sendSmtpEmail.setSender(sender);
             sendSmtpEmail.setTo(toList);
             sendSmtpEmail.setHtmlContent(email);
-            sendSmtpEmail.setSubject("Confirm your email");
+            sendSmtpEmail.setSubject("My {{params.subject}}");
             sendSmtpEmail.setReplyTo(replyTo);
             sendSmtpEmail.setHeaders(headers);
+            sendSmtpEmail.setParams(params);
             List<SendSmtpEmailTo1> toList1 = new ArrayList<SendSmtpEmailTo1>();
             SendSmtpEmailTo1 to1 = new SendSmtpEmailTo1();
             to1.setEmail(top);
@@ -89,13 +92,11 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             messageVersions.add(versions1);
             //messageVersions.add(versions2);
             sendSmtpEmail.setMessageVersions(messageVersions);
-            sendSmtpEmail.setTemplateId(1L);
+            //sendSmtpEmail.setTemplateId(1L);
             CreateSmtpEmail response = api.sendTransacEmail(sendSmtpEmail);
             System.out.println(response.toString());
         } catch (Exception e) {
             System.out.println("Exception occurred:- " + e.getMessage());
-            throw new EmailNotValidException("Exception occurred:- " + e.getMessage());
-
         }
     }
 
