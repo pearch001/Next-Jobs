@@ -14,4 +14,9 @@ public interface AppUserDao extends CrudRepository<AppUser,Long> {
     @Query("UPDATE AppUser a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
+
+    @Modifying
+    @Query("UPDATE AppUser a " +
+            "SET a.imageUrl = ?2 WHERE a.email = ?1")
+    int addImageUrl(String email,String imageUrl);
 }

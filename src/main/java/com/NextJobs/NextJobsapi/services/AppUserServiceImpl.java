@@ -75,6 +75,10 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
         appUserDao.enableAppUser(email);
     }
 
+    public void addImageUrl(String email, String imageUrl) {
+        appUserDao.addImageUrl(email,imageUrl);
+    }
+
     public AppUser registerUser(AppUser user, AppUserRole role) {
         log.info("registering user {}", user.getUsername());
 
@@ -92,6 +96,10 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
         return appUserDao.save(user);
     }
+
+
+
+
 
 
 }
