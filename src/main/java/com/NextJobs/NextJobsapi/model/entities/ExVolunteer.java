@@ -17,7 +17,21 @@ public class ExVolunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
+    private String careerAccomplishment;
+
+    private int yearsOfExperience;
+
+    private String Location;
+
+    private String websiteUrl;
+
+    private String cvUrl;
+
+    private String faceBookUrl;
+
+    private String twitterUrl;
+
+    private String linkedInUrl;
 
     @OneToOne
     @JoinColumn(
@@ -29,6 +43,10 @@ public class ExVolunteer {
     @ManyToOne
     @JoinColumn(name = "skills_ID")
     private Skills skills;
+
+    @ManyToOne
+    @JoinColumn(name = "tools_ID")
+    private Tools tools;
 
 
 }
