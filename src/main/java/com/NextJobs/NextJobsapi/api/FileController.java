@@ -50,6 +50,11 @@ public class FileController {
                 .body(resource);
     }
 
+    @DeleteMapping("/deleteCv/{fileName}")
+    public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
+        return new ResponseEntity<>(storageService.deleteFile(fileName), HttpStatus.OK);
+    }
+
 
 
 }
