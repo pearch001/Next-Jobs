@@ -22,8 +22,7 @@ public class StorageService {
     @Value("${application.bucket.name}")
     private String bucketName;
 
-    @Autowired
-    private AppUserServiceImpl appUserService;
+
 
 
     @Autowired
@@ -34,7 +33,7 @@ public class StorageService {
         File fileObj = convertMultiPartFileToFile(file);
         s3Client.putObject(bucketName,fileName,fileObj);
         fileObj.delete();
-        appUserService.addImageUrl(email, "https://next-jobs.s3.amazonaws.com/" + fileName);
+
         return "File Uploaded";
     }
 

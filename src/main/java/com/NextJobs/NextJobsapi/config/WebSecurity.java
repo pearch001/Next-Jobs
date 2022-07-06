@@ -60,9 +60,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-resources/**",
-                        "/nextjobs/v1/signin/facebook/signin",
-                        "/nextjobs/v1/signin/google/signin",
-                        "/nextjobs/v1/signin/linkedIn/signin",
+                        "/nextjobs/v1/facebook/signin",
+                        "/nextjobs/v1/google/signin",
+                        "/nextjobs/v1/linkedIn/signin",
                         "/configuration/**", "/nextjobs/v1/signup", "/nextjobs/v1/signup/**").permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().

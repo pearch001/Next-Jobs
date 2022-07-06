@@ -37,12 +37,24 @@ public class FacebookService {
     }
 
     private AppUser convertTo(FacebookUser facebookUser) {
+        if (facebookUser.getEmail() == null){
+            return AppUser.builder()
+                    .email(facebookUser.getId() + "@facebook.com")
+                    .firstName(facebookUser.getFirstName())
+                    .lastName(facebookUser.getLastName())
+                    .password(generatePassword(8))
+                    .enabled(true)
+                    .locked(false)
+                    .imageUrl(facebookUser.getPicture().getData().getUrl())
+                    .build();
+        }
         return AppUser.builder()
                 .email(facebookUser.getEmail())
                 .firstName(facebookUser.getFirstName())
                 .lastName(facebookUser.getLastName())
                 .password(generatePassword(8))
                 .enabled(true)
+                .locked(false)
                 .imageUrl(facebookUser.getPicture().getData().getUrl())
                 .build();
     }

@@ -1,6 +1,8 @@
 package com.NextJobs.NextJobsapi.api;
 
+import com.NextJobs.NextJobsapi.services.AppUserServiceImpl;
 import com.NextJobs.NextJobsapi.services.StorageService;
+import com.NextJobs.NextJobsapi.utils.ApiResponse;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +21,20 @@ public class FileController {
     StorageService storageService;
 
     @Autowired
+    private AppUserServiceImpl appUserService;
+
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
 
     @PostMapping("/picture/upload")
-    public ResponseEntity<String> uploadPicture(@RequestParam(value = "file") MultipartFile file,
-                                                @RequestHeader(value = "Authorization") String authorizationHeader) {
+    public ResponseEntity<ApiResponse> uploadPicture(@RequestParam(value = "file") MultipartFile file,
+                                                     @RequestHeader(value = "Authorization") String authorizationHeader) {
         String email = jwtTokenUtil.getUsernameFromToken(authorizationHeader.substring(7));
         String filename =  email + "image";
-        return new ResponseEntity<>(storageService.uploadFile(file,filename,email), HttpStatus.OK);
+        storageService.uploadFile(file,filename,email);
+        appUserService.addImageUrl(email, "https://next-jobs.s3.amazonaws.com/" + filename);
+        return new ResponseEntity<>(new ApiResponse(true,"Profile pic Uploaded"), HttpStatus.OK);
     }
 
     @PostMapping("/cv/upload")
