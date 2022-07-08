@@ -45,7 +45,7 @@ public class FacebookService {
                     .password(generatePassword(8))
                     .enabled(true)
                     .locked(false)
-                    .imageUrl(facebookUser.getPicture().getData().getUrl())
+                    .imageUrl(null)
                     .build();
         }
         return AppUser.builder()
