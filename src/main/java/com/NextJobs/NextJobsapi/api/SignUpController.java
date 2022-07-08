@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/nextjobs/v1/signup")
+@CrossOrigin("*")
 @RestController
 public class SignUpController {
 
