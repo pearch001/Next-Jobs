@@ -64,7 +64,7 @@ public class SignInController {
 
     @PostMapping("/google/signin")
     public  ResponseEntity<?> googleAuth(@RequestBody GoogleLoginRequest googleLoginRequest) throws GeneralSecurityException, IOException {
-        log.info("facebook login {}", googleLoginRequest);
+        log.info("googleh login {}", googleLoginRequest);
         String token = googleService.loginUser(googleLoginRequest.getAccessToken());
         return ResponseEntity.ok(new JwtResponse(token));
     }

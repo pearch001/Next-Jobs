@@ -35,8 +35,7 @@ public class GoogleClient {
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build();
 
-        // (Receive idTokenString by HTTPS POST)
-
+        // (Receive idTokenString by HTTPS POST
         GoogleIdToken idToken = verifier.verify(accessToken);
         if (idToken != null) {
             Payload payload = idToken.getPayload();
