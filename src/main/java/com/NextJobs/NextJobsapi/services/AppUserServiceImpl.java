@@ -84,9 +84,7 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
         if(appUserDao.findByEmail(user.getEmail()).isPresent()) {
             log.warn("username {} already exists.", user.getUsername());
-
-            throw new UserExistException(
-                    String.format("username %s already exists", user.getUsername()));
+           return appUserDao.findByEmail(user.getEmail()).get();
         }
 
 

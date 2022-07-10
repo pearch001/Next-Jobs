@@ -29,6 +29,16 @@ public class FacebookService {
     public String loginUser(String fbAccessToken) {
         var facebookUser = facebookClient.getUser(fbAccessToken);
 
+        if (facebookUser.getEmail() == null){
+
+            return appUserDao.findByEmail(facebookUser.getId() + "@facebook.com")
+                    .or(() -> Optional.ofNullable(appUserService.registerUser(convertTo(facebookUser), AppUserRole.NEWUSER)))
+                    .map(tokenProvider::generateToken)
+                    .orElseThrow(() ->
+                            new InternalServerException("unable to login facebook user id " + facebookUser.getId()));
+
+        }
+
         return appUserDao.findByEmail(facebookUser.getEmail())
                 .or(() -> Optional.ofNullable(appUserService.registerUser(convertTo(facebookUser), AppUserRole.NEWUSER)))
                 .map(tokenProvider::generateToken)
