@@ -1,38 +1,47 @@
 package com.NextJobs.NextJobsapi.utils;
 import com.NextJobs.NextJobsapi.exceptions.InvalidTokenException;
-import com.NextJobs.NextJobsapi.model.entities.facebook.FacebookUser;
 import com.NextJobs.NextJobsapi.model.entities.google.GoogleUser;
+import com.google.api.client.auth.openidconnect.IdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import java.io.*;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
+import java.util.Arrays;
 
+@Slf4j
 @Service
 public class GoogleClient {
     @Autowired
     private RestTemplate restTemplate;
+    @Value("${google.clientId}")
+    private String CLIENT_ID;
 
-    private final String CLIENT_ID = "274465433189-bae050vqccq2ul57665m946fm64opnf4.apps.googleusercontent.com";
+    private final HttpTransport transport = new NetHttpTransport();
+    private final JsonFactory jsonFactory = new GsonFactory();
 
-    private HttpTransport transport;
-    private JsonFactory jsonFactory;
+
+
 
     public GoogleUser getUser(String accessToken) throws GeneralSecurityException, IOException {
+        log.info(CLIENT_ID);
 
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder( transport , jsonFactory)
                 // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(CLIENT_ID))
+                //.setAudience(Collections.singletonList("274465433189-bae050vqccq2ul57665m946fm64opnf4.apps.googleusercontent.com"))
                 // Or, if multiple clients access the backend:
-                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+                .setAudience(Arrays.asList(CLIENT_ID))
                 .build();
 
         // (Receive idTokenString by HTTPS POST
