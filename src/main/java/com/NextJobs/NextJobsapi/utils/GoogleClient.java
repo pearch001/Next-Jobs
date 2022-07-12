@@ -35,7 +35,7 @@ public class GoogleClient {
 
 
     public GoogleUser getUser(String accessToken) throws GeneralSecurityException, IOException {
-        log.info(CLIENT_ID);
+
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder( transport , jsonFactory)
                 // Specify the CLIENT_ID of the app that accesses the backend:
