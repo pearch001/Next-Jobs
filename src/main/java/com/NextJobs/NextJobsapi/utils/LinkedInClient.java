@@ -14,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.net.ssl.SSLException;
 import java.util.HashMap;
@@ -51,6 +52,15 @@ public class LinkedInClient {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
 
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("grant_type", "{grant_type}")
+                .queryParam("code", "{code}")
+                .queryParam("redirect_uri", "{redirect_uri}")
+                .queryParam("client_id", "{client_id}")
+                .queryParam("client_secret", "{client_secret}")
+                .encode()
+                .toUriString();
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("grant_type", "authorization_code");
         params.put("code", code);
@@ -59,9 +69,9 @@ public class LinkedInClient {
         params.put("client_secret", CLIENT_Secret);
 
 
-        HttpEntity entity = new HttpEntity(headers);
+        HttpEntity entity = new HttpEntity(params,headers);
 
-        ResponseEntity<LinkedInLoginRequest> request = restTemplate.exchange(url, HttpMethod.GET, entity, LinkedInLoginRequest.class, params);
+        ResponseEntity<LinkedInLoginRequest> request = restTemplate.exchange(urlTemplate, HttpMethod.GET, entity, LinkedInLoginRequest.class, params);
         log.info("Getting acces token from linkedIn: " + request.getBody().accessToken);
         return request.getBody().accessToken;
 
