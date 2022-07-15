@@ -62,7 +62,7 @@ public class LinkedInClient {
         HttpEntity entity = new HttpEntity(headers);
 
         ResponseEntity<LinkedInLoginRequest> request = restTemplate.exchange(url, HttpMethod.GET, entity, LinkedInLoginRequest.class, params);
-        log.info(request.getBody().accessToken);
+        log.info("Getting acces token from linkedIn: " + request.getBody().accessToken);
         return request.getBody().accessToken;
 
 
