@@ -71,7 +71,7 @@ public class SignInController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @PostMapping("/linkedIn/signin")
+    @GetMapping("/linkedIn/signin")
     public  ResponseEntity<?> linkedInAuth(@RequestParam(required = false) String state,@RequestParam(required = false) String code) {
         log.info("linkedIn login {}", code);
         String token = linkedInService.loginUser(code);
