@@ -21,15 +21,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
-    /*@Bean
-    public Docket productApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(getApiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.NextJobs.NextJobsapi"))
-                .paths(PathSelectors.any())
-                .build().pathMapping("/");
-    }*/
 
     @Bean
     public Docket api() {

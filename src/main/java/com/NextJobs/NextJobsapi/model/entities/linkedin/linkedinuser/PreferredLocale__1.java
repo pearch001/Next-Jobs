@@ -1,7 +1,6 @@
 
-package com.NextJobs.NextJobsapi.model.entities.linkedin;
+package com.NextJobs.NextJobsapi.model.entities.linkedin.linkedinuser;
 
-import java.util.List;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,12 +16,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "elements"
+    "country",
+    "language"
 })
 @Generated("jsonschema2pojo")
-public class LinkedInUserEmail {
+public class PreferredLocale__1 {
 
-    @JsonProperty("elements")
-    public List<Element> elements = null;
+    @JsonProperty("country")
+    public String country;
+    @JsonProperty("language")
+    public String language;
 
 }

@@ -23,8 +23,7 @@ import java.util.Arrays;
 @Slf4j
 @Service
 public class GoogleClient {
-    @Autowired
-    private RestTemplate restTemplate;
+
     @Value("${google.clientId}")
     private String CLIENT_ID;
 

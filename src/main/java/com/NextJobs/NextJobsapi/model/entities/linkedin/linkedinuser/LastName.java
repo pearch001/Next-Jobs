@@ -1,5 +1,5 @@
 
-package com.NextJobs.NextJobsapi.model.entities.linkedin;
+package com.NextJobs.NextJobsapi.model.entities.linkedin.linkedinuser;
 
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,21 +16,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "id",
-    "firstName",
-    "lastName",
-    "profilePicture"
+    "localized",
+    "preferredLocale"
 })
 @Generated("jsonschema2pojo")
-public class LinkedInUser {
+public class LastName {
 
-    @JsonProperty("id")
-    public String id;
-    @JsonProperty("firstName")
-    public FirstName firstName;
-    @JsonProperty("lastName")
-    public LastName lastName;
-    @JsonProperty("profilePicture")
-    public ProfilePicture profilePicture;
+    @JsonProperty("localized")
+    public Localized__1 localized;
+    @JsonProperty("preferredLocale")
+    public PreferredLocale__1 preferredLocale;
 
 }
