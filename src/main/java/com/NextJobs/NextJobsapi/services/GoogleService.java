@@ -48,7 +48,8 @@ public class GoogleService {
                 .lastName(googleUser.getLastName())
                 .enabled(true)
                 .password(generatePassword(8))
-                .imageUrl(null)
+                .imageUrl(googleUser.getPicture())
+                .locked(false)
                 .build();
     }
 

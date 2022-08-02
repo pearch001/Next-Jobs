@@ -53,6 +53,7 @@ public class LinkedInService {
                 .firstName(linkedInUser.localizedFirstName)
                 .lastName(linkedInUser.localizedLastName)
                 .enabled(true)
+                .locked(false)
                 .password(generatePassword(8))
                 .imageUrl(linkedInUser.profilePicture.displayImage)
                 .build();

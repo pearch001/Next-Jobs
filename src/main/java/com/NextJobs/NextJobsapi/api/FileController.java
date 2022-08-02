@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @RequestMapping("/nextjobs/v1/file")
 @RestController
+@CrossOrigin("*")
 public class FileController {
 
     @Autowired

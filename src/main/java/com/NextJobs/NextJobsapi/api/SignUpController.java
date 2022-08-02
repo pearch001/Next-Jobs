@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @Slf4j
 @RequestMapping("/nextjobs/v1/signup")
 @CrossOrigin("*")
@@ -26,9 +28,9 @@ public class SignUpController {
     }
 
     @GetMapping(path = "confirm")
-    public ResponseEntity<ApiResponse> confirmToken(@RequestParam("token") String token) {
+    public ResponseEntity<Void> confirmToken(@RequestParam("token") String token) {
         signUpService.confirmToken(token);
-        return new ResponseEntity<>(new ApiResponse(true,"Email Confirmed"), HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://motherfuckingwebsite.com/")).build();
 
     }
 
