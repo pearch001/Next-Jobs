@@ -30,7 +30,7 @@ public class SignUpController {
     @GetMapping(path = "confirm")
     public ResponseEntity<Void> confirmToken(@RequestParam("token") String token) {
         signUpService.confirmToken(token);
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://meet.google.com/vyf-rfem-iku")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("chic-fenglisu-b3e414.netlify.app")).build();
 
     }
 
