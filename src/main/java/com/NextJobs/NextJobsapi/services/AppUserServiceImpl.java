@@ -48,6 +48,24 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
         if (userExists) {
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email.
+            var user = appUserDao
+                    .findByEmail(appUser.getEmail()).get();
+            log.info("Checking if user has been confirmed");
+            if (appUser.getEnabled().equals(false) & appUser.getFirstName().equals(user.getFirstName()) &
+                appUser.getLastName().equals(user.getLastName())){
+                String token = UUID.randomUUID().toString();
+                log.info("Sending confirmation token");
+                ConfirmationToken confirmationToken = new ConfirmationToken(
+                        token,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(15),
+                        user
+                );
+
+                confirmationTokenService.saveConfirmationToken(
+                        confirmationToken);
+                return token;
+            }
 
             throw new UserExistException("email already taken");
         }

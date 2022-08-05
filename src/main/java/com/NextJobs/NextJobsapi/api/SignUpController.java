@@ -23,14 +23,14 @@ public class SignUpController {
     @PostMapping
     public ResponseEntity<ApiResponse> signup(@RequestBody SignUpRequest request) {
         String Link = signUpService.register(request);
-        return new ResponseEntity<>(new ApiResponse(true,Link), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new ApiResponse(true,"User created"), HttpStatus.ACCEPTED);
 
     }
 
     @GetMapping(path = "confirm")
     public ResponseEntity<Void> confirmToken(@RequestParam("token") String token) {
         signUpService.confirmToken(token);
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://motherfuckingwebsite.com/")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://meet.google.com/vyf-rfem-iku")).build();
 
     }
 
