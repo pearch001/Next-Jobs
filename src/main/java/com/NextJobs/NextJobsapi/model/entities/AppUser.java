@@ -28,6 +28,7 @@ public class AppUser implements UserDetails {
     private String email;
     private String password;
 
+    private String recovery;
     private String imageUrl = null;
 
     @Enumerated(EnumType.STRING)

@@ -12,6 +12,7 @@ import com.NextJobs.NextJobsapi.services.LinkedInService;
 import com.NextJobs.NextJobsapi.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URI;
 import java.security.GeneralSecurityException;
 
 @Slf4j
@@ -72,9 +74,9 @@ public class SignInController {
     }
 
     @GetMapping("/linkedIn/signin")
-    public  ResponseEntity<?> linkedInAuth(@RequestParam(required = false) String state,@RequestParam(required = false) String code) {
+    public  ResponseEntity<Void> linkedInAuth(@RequestParam(required = false) String state,@RequestParam(required = false) String code) {
         log.info("linkedIn login {}", code);
         String token = linkedInService.loginUser(code);
-        return ResponseEntity.ok(token);
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://chic-fenglisu-b3e414.netlify.app")).build();
     }
 }

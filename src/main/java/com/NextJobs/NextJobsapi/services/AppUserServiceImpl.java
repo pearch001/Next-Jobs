@@ -39,6 +39,11 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
         return appUserDao.findByEmail(s).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
+
+    public AppUser loadUserByEmail(String email) throws UsernameNotFoundException {
+        return appUserDao.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+    }
+
     @Override
     public String signup(AppUser appUser) {
         boolean userExists = appUserDao
@@ -67,7 +72,7 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
                 return token;
             }
 
-            throw new UserExistException("email already taken");
+            throw new UserExistException("User details already exist");
         }
 
 

@@ -33,5 +33,15 @@ public class SignUpController {
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("https://chic-fenglisu-b3e414.netlify.app")).build();
 
     }
+    @GetMapping("/recover/first/{email}/")
+    public ResponseEntity<ApiResponse> recoverfirst(@PathVariable String email){
+        log.info("IN RECOVERY");
+        if (signUpService.recovery(email)){
+            return new ResponseEntity<>(new ApiResponse(true,"Recovery Email sent"), HttpStatus.ACCEPTED);
+        }else   {
+            return new ResponseEntity<>(new ApiResponse(false,"Email does not exist"), HttpStatus.ACCEPTED);
+        }
+
+    }
 
 }
