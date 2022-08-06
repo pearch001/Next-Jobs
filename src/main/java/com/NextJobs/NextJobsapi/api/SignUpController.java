@@ -45,7 +45,7 @@ public class SignUpController {
         }
 
     }
-    @GetMapping("/recover/check")
+    @PostMapping("/recover/check")
     public ResponseEntity<ApiResponse> recoverCheck(@RequestBody RecoveryCheckRequest request){
         log.info("IN RECOVERY Check");
         if (signUpService.recoveryCheck(request)){
@@ -55,7 +55,7 @@ public class SignUpController {
         }
     }
 
-    @GetMapping("/recover/second")
+    @PostMapping("/recover/second")
     public ResponseEntity<ApiResponse> recoverComplete(@RequestBody PasswordChangeRequest request){
         log.info("IN RECOVERY 2nd phase");
         signUpService.recoverysecond(request);

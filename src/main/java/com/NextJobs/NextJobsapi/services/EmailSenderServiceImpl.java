@@ -79,7 +79,62 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             sendSmtpEmail.setSender(sender);
             sendSmtpEmail.setTo(toList);
             sendSmtpEmail.setHtmlContent(email);
-            sendSmtpEmail.setSubject("My {{params.subject}}");
+            sendSmtpEmail.setSubject("{{params.subject}}");
+            sendSmtpEmail.setReplyTo(replyTo);
+            sendSmtpEmail.setHeaders(headers);
+            sendSmtpEmail.setParams(params);
+            List<SendSmtpEmailTo1> toList1 = new ArrayList<SendSmtpEmailTo1>();
+            SendSmtpEmailTo1 to1 = new SendSmtpEmailTo1();
+            to1.setEmail(top);
+            to1.setName("John Doe");
+            toList1.add(to1);
+            List<SendSmtpEmailMessageVersions> messageVersions = new ArrayList<>();
+            SendSmtpEmailMessageVersions versions1 = new SendSmtpEmailMessageVersions();
+            //SendSmtpEmailMessageVersions versions2 = new SendSmtpEmailMessageVersions();
+            versions1.to(toList1);
+            //versions2.to(toList1);
+            messageVersions.add(versions1);
+            //messageVersions.add(versions2);
+            sendSmtpEmail.setMessageVersions(messageVersions);
+            //sendSmtpEmail.setTemplateId(1L);
+            CreateSmtpEmail response = api.sendTransacEmail(sendSmtpEmail);
+            System.out.println(response.toString());
+        } catch (Exception e) {
+            throw new EmailNotValidException("Exception occurred:- " + e.getMessage());
+
+        }
+    }
+
+    public void sendRecoveryMail(String top, String email){
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        // Configure API key authorization: api-key
+        ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
+        apiKey.setApiKey(secret);
+
+        try {
+
+            TransactionalEmailsApi api = new TransactionalEmailsApi();
+            SendSmtpEmailSender sender = new SendSmtpEmailSender();
+            sender.setEmail("kasimoluwasegun@gmail.com");
+            sender.setName("Next Jobs");
+            List<SendSmtpEmailTo> toList = new ArrayList<SendSmtpEmailTo>();
+            SendSmtpEmailTo to = new SendSmtpEmailTo();
+            to.setEmail(top);
+            to.setName("");
+            toList.add(to);
+            SendSmtpEmailReplyTo replyTo = new SendSmtpEmailReplyTo();
+            replyTo.setEmail("kasimoluwasegun@gmail.com");
+            replyTo.setName("kasimoluwasegun@gmail.com");
+            Properties headers = new Properties();
+            headers.setProperty("Some-Custom-Name", "unique-id-1234");
+            Properties params = new Properties();
+            params.setProperty("parameter", "");
+            params.setProperty("subject", "Password email");
+            SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+            sendSmtpEmail.setSender(sender);
+            sendSmtpEmail.setTo(toList);
+            sendSmtpEmail.setHtmlContent(email);
+            sendSmtpEmail.setSubject("{{params.subject}}");
             sendSmtpEmail.setReplyTo(replyTo);
             sendSmtpEmail.setHeaders(headers);
             sendSmtpEmail.setParams(params);
