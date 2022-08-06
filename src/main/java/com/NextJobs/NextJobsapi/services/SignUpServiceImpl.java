@@ -1,6 +1,7 @@
 package com.NextJobs.NextJobsapi.services;
 
 import com.NextJobs.NextJobsapi.dao.AppUserDao;
+import com.NextJobs.NextJobsapi.exceptions.InternalServerException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
 import com.NextJobs.NextJobsapi.model.requests.SignUpRequest;
@@ -79,6 +80,16 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 buildEmail(user.getFirstName(), random));
 
         return true;
+    }
+
+    public boolean recoveryCheck(String text){
+        if(text.length() < 3)
+        {
+            throw  new InternalServerException("Service not available")
+        }
+        AppUser user = appUserService.loadUserByEmail(email);
+
+        return null;
     }
 
     public SignupResponse recoverysecond(PasswordChange emp) {
