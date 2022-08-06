@@ -4,6 +4,8 @@ import com.NextJobs.NextJobsapi.dao.AppUserDao;
 import com.NextJobs.NextJobsapi.exceptions.InternalServerException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
+import com.NextJobs.NextJobsapi.model.requests.PasswordChangeRequest;
+import com.NextJobs.NextJobsapi.model.requests.RecoveryCheckRequest;
 import com.NextJobs.NextJobsapi.model.requests.SignUpRequest;
 import com.NextJobs.NextJobsapi.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
@@ -77,50 +79,43 @@ public class SignUpServiceImpl implements SignUpServiceInt{
 
         emailSenderService.sendMail(
                 email,
-                buildEmail(user.getFirstName(), random));
+                buildRecoveryEmail(user.getFirstName(), random));
 
         return true;
     }
 
-    public boolean recoveryCheck(String text){
-        if(text.length() < 3)
+    public boolean recoveryCheck(RecoveryCheckRequest request){
+        if(request.getText().length() < 3)
         {
-            throw  new InternalServerException("Service not available")
+            throw  new InternalServerException("Service not available");
         }
-        AppUser user = appUserService.loadUserByEmail(email);
-
-        return null;
+        AppUser appUser = appUserService.loadUserByEmail(request.getUserame());
+        if (appUser.getRecovery().equals(request.getText())){
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    public SignupResponse recoverysecond(PasswordChange emp) {
+    public void recoverysecond(PasswordChangeRequest request) {
 
-        if(emp.getText().length() < 3)
+        if(request.getText().length() < 3)
         {
-            res.setCode(500);
-            res.setMessage("Try Again Later");
+            throw  new InternalServerException("Service not available");
         }
 
-        User user = userService.findByUsernameWithPassword(emp.getUserame());
-        if (user.getRecovery().equals(emp.getText())){
-            user.setRecovery("");
-            user.setPassword(BCrypt.withDefaults().hashToString(10, emp.getPassword().toCharArray()));
+        AppUser appUser = appUserService.loadUserByEmail(request.getUserame());
+        if (appUser.getRecovery().equals(request.getText())){
+            appUser.setRecovery("");
+            appUserService.changePassword(request.getPassword(),request.getUserame());
         }else {
-            res.setCode(500);
-            res.setMessage("Try Again Later");
-            return res;
+            throw  new InternalServerException("Service not available");
         }
 
-        res.setCode(200);
-        res.setMessage("Password Recovery Success");
-        emailService.sendMail(emp.getUserame(),
-                "PAYSURE PASSWORD RECOVERY SUCCESS", "Dear " + "Sir/Madam" + ",\n" +
-                        "\n" +
-                        "Your password request was successful. \n"
-                        + "Kindly login to your account.\n" +
-                        "If you have any issue, kindly send an email to notifications@paysuredigital.com\n" +
-                        "\n\n\n" +
-                        "Thank you and keep safe.\n\n\n\n\n");
-        return res;
+
+        emailSenderService.sendMail(
+                request.getUserame(),
+                buildRecoverySuccessEmail(appUser.getFirstName()));
     }
 
     @Override
@@ -285,6 +280,80 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 "There has been a request to recovery your password. \n"
                 + "Kindly copy this text: " + random + " and paste it on your application.\n" +
                 "If this was not you, send an email to nextjobs@customerCare.com or ignore as no changes was made to your account\n" +
+                "\n\n\n" +
+                "Thank you and keep safe.\n\n\n\n\n" +  "</p>" +
+                "        \n" +
+                "      </td>\n" +
+                "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <td height=\"30\"><br></td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
+                "\n" +
+                "</div></div>";
+    }
+    private String buildRecoverySuccessEmail(String name) {
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+                "\n" +
+                "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
+                "\n" +
+                "  <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;min-width:100%;width:100%!important\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td width=\"100%\" height=\"53\" bgcolor=\"#0b0c0c\">\n" +
+                "        \n" +
+                "        <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;max-width:580px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\">\n" +
+                "          <tbody><tr>\n" +
+                "            <td width=\"70\" bgcolor=\"#0b0c0c\" valign=\"middle\">\n" +
+                "                <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n" +
+                "                  <tbody><tr>\n" +
+                "                    <td style=\"padding-left:10px\">\n" +
+                "                  \n" +
+                "                    </td>\n" +
+                "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n" +
+                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">PASSWORD RECOVERY SUCCESS</span>\n" +
+                "                    </td>\n" +
+                "                  </tr>\n" +
+                "                </tbody></table>\n" +
+                "              </a>\n" +
+                "            </td>\n" +
+                "          </tr>\n" +
+                "        </tbody></table>\n" +
+                "        \n" +
+                "      </td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table>\n" +
+                "  <table role=\"presentation\" class=\"m_-6186904992287805515content\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse;max-width:580px;width:100%!important\" width=\"100%\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td width=\"10\" height=\"10\" valign=\"middle\"></td>\n" +
+                "      <td>\n" +
+                "        \n" +
+                "                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n" +
+                "                  <tbody><tr>\n" +
+                "                    <td bgcolor=\"#1D70B8\" width=\"100%\" height=\"10\"></td>\n" +
+                "                  </tr>\n" +
+                "                </tbody></table>\n" +
+                "        \n" +
+                "      </td>\n" +
+                "      <td width=\"10\" valign=\"middle\" height=\"10\"></td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table>\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "  <table role=\"presentation\" class=\"m_-6186904992287805515content\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse;max-width:580px;width:100%!important\" width=\"100%\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td height=\"30\"><br></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
+                "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
+                "        \n" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
+                "\n" +
+                "Your password request was successful. \n"
+                + "Kindly login to your account.\n" +
+                "If you have any issue, kindly send an email to extjobs@customerCare.com\n" +
                 "\n\n\n" +
                 "Thank you and keep safe.\n\n\n\n\n" +  "</p>" +
                 "        \n" +

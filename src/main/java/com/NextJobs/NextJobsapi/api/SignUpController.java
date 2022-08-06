@@ -1,5 +1,7 @@
 package com.NextJobs.NextJobsapi.api;
 
+import com.NextJobs.NextJobsapi.model.requests.PasswordChangeRequest;
+import com.NextJobs.NextJobsapi.model.requests.RecoveryCheckRequest;
 import com.NextJobs.NextJobsapi.model.requests.SignUpRequest;
 import com.NextJobs.NextJobsapi.services.SignUpServiceImpl;
 import com.NextJobs.NextJobsapi.utils.ApiResponse;
@@ -42,6 +44,22 @@ public class SignUpController {
             return new ResponseEntity<>(new ApiResponse(false,"Email does not exist"), HttpStatus.ACCEPTED);
         }
 
+    }
+    @GetMapping("/recover/check")
+    public ResponseEntity<ApiResponse> recoverCheck(@RequestBody RecoveryCheckRequest request){
+        log.info("IN RECOVERY Check");
+        if (signUpService.recoveryCheck(request)){
+            return new ResponseEntity<>(new ApiResponse(true,"Recovery text is correct"), HttpStatus.ACCEPTED);
+        }else   {
+            return new ResponseEntity<>(new ApiResponse(false,"Recovery text is wrong"), HttpStatus.ACCEPTED);
+        }
+    }
+
+    @GetMapping("/recover/second")
+    public ResponseEntity<ApiResponse> recoverComplete(@RequestBody PasswordChangeRequest request){
+        log.info("IN RECOVERY 2nd phase");
+        signUpService.recoverysecond(request);
+        return new ResponseEntity<>(new ApiResponse(true,"Recovery Complete"), HttpStatus.ACCEPTED);
     }
 
 }

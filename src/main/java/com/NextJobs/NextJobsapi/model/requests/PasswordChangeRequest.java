@@ -1,7 +1,9 @@
 package com.NextJobs.NextJobsapi.model.requests;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 
+@Data
 public class PasswordChangeRequest {
     @NotNull
     private String text;

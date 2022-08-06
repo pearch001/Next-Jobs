@@ -94,6 +94,12 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
                 confirmationToken);
         return token;
     }
+
+    public void changePassword(String password, String userName){
+        AppUser appUser = appUserDao.findByEmail(userName).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        appUser.setPassword(bCryptPasswordEncoder.encode(password));
+    }
+
     public void enableAppUser(String email) {
         appUserDao.enableAppUser(email);
     }
