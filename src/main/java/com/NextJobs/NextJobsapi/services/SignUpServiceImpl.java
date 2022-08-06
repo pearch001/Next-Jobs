@@ -77,7 +77,7 @@ public class SignUpServiceImpl implements SignUpServiceInt{
         log.info("User Details: " + user.getRecovery());
 
 
-        emailSenderService.sendMail(
+        emailSenderService.sendRecoveryMail(
                 email,
                 buildRecoveryEmail(user.getFirstName(), random));
 
@@ -113,7 +113,7 @@ public class SignUpServiceImpl implements SignUpServiceInt{
         }
 
 
-        emailSenderService.sendMail(
+        emailSenderService.sendRecoveryMail(
                 request.getUserame(),
                 buildRecoverySuccessEmail(appUser.getFirstName()));
     }
@@ -277,11 +277,11 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 "        \n" +
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "\n" +
-                "There has been a request to recovery your password. \n"
-                + "Kindly copy this text: " + random + " and paste it on your application.\n" +
-                "If this was not you, send an email to nextjobs@customerCare.com or ignore as no changes was made to your account\n" +
+                "<p>There has been a request to recovery your password.</p> \n"
+                + "<p>Kindly copy this text: " + random + " and paste it on your application. </p>\n" +
+                "<p>If this was not you, send an email to nextjobs@customerCare.com or ignore as no changes was made to your account</p>\n" +
                 "\n\n\n" +
-                "Thank you and keep safe.\n\n\n\n\n" +  "</p>" +
+                "<p>Thank you and keep safe.\n\n\n\n\n" +  "</p></p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
@@ -351,9 +351,9 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 "        \n" +
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "\n" +
-                "Your password request was successful. \n"
-                + "Kindly login to your account.\n" +
-                "If you have any issue, kindly send an email to extjobs@customerCare.com\n" +
+                "<p> Your password request was successful. \n"
+                + "Kindly login to your account.\n </p>" +
+                "<p>If you have any issue, kindly send an email to extjobs@customerCare.com\n </p>" +
                 "\n\n\n" +
                 "Thank you and keep safe.\n\n\n\n\n" +  "</p>" +
                 "        \n" +
