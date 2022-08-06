@@ -278,7 +278,7 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" +
                 "\n" +
                 "<p>There has been a request to recovery your password.</p> \n"
-                + "<p>Kindly copy this text: " + random + " and paste it on your application. </p>\n" +
+                + "<p>Kindly copy this text: <strong> " + random + " </strong> and paste it on your application. </p>\n" +
                 "<p>If this was not you, send an email to nextjobs@customerCare.com or ignore as no changes was made to your account</p>\n" +
                 "\n\n\n" +
                 "<p>Thank you and keep safe.\n\n\n\n\n" +  "</p></p>" +
@@ -353,7 +353,7 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 "\n" +
                 "<p> Your password request was successful. \n"
                 + "Kindly login to your account.\n </p>" +
-                "<p>If you have any issue, kindly send an email to extjobs@customerCare.com\n </p>" +
+                "<p>If you have any issue, kindly send an email to nextjobs@customerCare.com\n </p>" +
                 "\n\n\n" +
                 "Thank you and keep safe.\n\n\n\n\n" +  "</p>" +
                 "        \n" +

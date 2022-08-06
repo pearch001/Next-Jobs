@@ -129,7 +129,7 @@ public class EmailSenderServiceImpl implements EmailSenderServiceInt{
             headers.setProperty("Some-Custom-Name", "unique-id-1234");
             Properties params = new Properties();
             params.setProperty("parameter", "");
-            params.setProperty("subject", "Password email");
+            params.setProperty("subject", "Password Recovery Email");
             SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
             sendSmtpEmail.setSender(sender);
             sendSmtpEmail.setTo(toList);
