@@ -11,9 +11,6 @@ import java.util.List;
 
 @Data
 public class ExVolunteerRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String currentPosition;
 
@@ -32,6 +29,8 @@ public class ExVolunteerRequest {
     private String websiteUrl;
 
     private String cvUrl;
+
+    private String picUrl;
 
     private String faceBookUrl;
 
