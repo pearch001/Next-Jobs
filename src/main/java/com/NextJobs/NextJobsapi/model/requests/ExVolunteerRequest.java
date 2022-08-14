@@ -34,7 +34,7 @@ public class ExVolunteerRequest {
 
     private String faceBookUrl;
 
-    private String twitterUrl;
+    private String githubUrl;
 
     private String linkedInUrl;
 

@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
@@ -41,7 +39,7 @@ public class Individual {
 
     private String faceBookUrl;
 
-    private String twitterUrl;
+    private String githubUrl;
 
     private String linkedInUrl;
 
@@ -55,7 +53,7 @@ public class Individual {
 
     private String skills;
 
-    public Individual(String currentPosition, String education, String country, String location, String phoneNumber, String aboutYourself, Date dob, String websiteUrl, String cvUrl, String faceBookUrl, String twitterUrl, String linkedInUrl, AppUser appUser, String skills) {
+    public Individual(String currentPosition, String education, String country, String location, String phoneNumber, String aboutYourself, Date dob, String websiteUrl, String cvUrl, String faceBookUrl, String githubUrl, String linkedInUrl, AppUser appUser, String skills) {
         this.currentPosition = currentPosition;
         this.education = education;
         this.country = country;
@@ -66,7 +64,7 @@ public class Individual {
         this.websiteUrl = websiteUrl;
         this.cvUrl = cvUrl;
         this.faceBookUrl = faceBookUrl;
-        this.twitterUrl = twitterUrl;
+        this.githubUrl = githubUrl;
         this.linkedInUrl = linkedInUrl;
         this.appUser = appUser;
         this.skills = skills;
