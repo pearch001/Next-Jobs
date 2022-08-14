@@ -2,12 +2,14 @@ package com.NextJobs.NextJobsapi.services;
 
 import com.NextJobs.NextJobsapi.dao.AppUserDao;
 import com.NextJobs.NextJobsapi.exceptions.UserExistException;
+import com.NextJobs.NextJobsapi.model.dtos.userDto;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
 import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -42,6 +45,13 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
     public AppUser loadUserByEmail(String email) throws UsernameNotFoundException {
         return appUserDao.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+    }
+
+    public userDto loadUser() throws UsernameNotFoundException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = userDetails.getUsername();
+        return convertToUserDto(appUserDao.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found")));
     }
 
     @Override
@@ -122,6 +132,10 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
 
         return appUserDao.save(user);
+    }
+
+    public userDto convertToUserDto(AppUser appUser){
+        return  new userDto(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getImageUrl());
     }
 
 
