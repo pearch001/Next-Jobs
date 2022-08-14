@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,11 +19,20 @@ public class ExVolunteer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String careerAccomplishment;
+    private String currentPosition;
 
-    private int yearsOfExperience;
+    private String education;
 
-    private String Location;
+    private String country;
+
+    private String location;
+
+    private String phoneNumber;
+
+    @Lob
+    private String aboutYourself;
+
+    private Date dob;
 
     private String websiteUrl;
 
@@ -40,13 +51,23 @@ public class ExVolunteer {
     )
     private AppUser appUser;
 
-    @ManyToOne
-    @JoinColumn(name = "skills_ID")
-    private Skills skills;
 
-    @ManyToOne
-    @JoinColumn(name = "tools_ID")
-    private Tools tools;
+    private String skills;
 
-
+    public ExVolunteer(String currentPosition, String education, String country, String location, String phoneNumber, String aboutYourself, Date dob, String websiteUrl, String cvUrl, String faceBookUrl, String twitterUrl, String linkedInUrl, AppUser appUser, String skills) {
+        this.currentPosition = currentPosition;
+        this.education = education;
+        this.country = country;
+        this.location = location;
+        this.phoneNumber = phoneNumber;
+        this.aboutYourself = aboutYourself;
+        this.dob = dob;
+        this.websiteUrl = websiteUrl;
+        this.cvUrl = cvUrl;
+        this.faceBookUrl = faceBookUrl;
+        this.twitterUrl = twitterUrl;
+        this.linkedInUrl = linkedInUrl;
+        this.appUser = appUser;
+        this.skills = skills;
+    }
 }

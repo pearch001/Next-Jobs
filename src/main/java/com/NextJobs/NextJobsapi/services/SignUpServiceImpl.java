@@ -1,6 +1,7 @@
 package com.NextJobs.NextJobsapi.services;
 
 import com.NextJobs.NextJobsapi.dao.AppUserDao;
+import com.NextJobs.NextJobsapi.exceptions.EmailNotValidException;
 import com.NextJobs.NextJobsapi.exceptions.InternalServerException;
 import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.ConfirmationToken;
@@ -40,7 +41,7 @@ public class SignUpServiceImpl implements SignUpServiceInt{
                 test(request.getEmail());
 
         if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
+            throw new EmailNotValidException("email not valid");
         }
 
 

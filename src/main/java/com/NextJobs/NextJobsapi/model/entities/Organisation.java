@@ -28,4 +28,6 @@ public class Organisation {
             name = "app_user_id"
     )
     private AppUser appUser;
+
+
 }

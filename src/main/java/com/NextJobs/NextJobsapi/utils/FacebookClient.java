@@ -25,4 +25,5 @@ public class FacebookClient {
         return restTemplate
                 .getForObject(FACEBOOK_GRAPH_API_BASE + path, FacebookUser.class, variables);
     }
+
 }
