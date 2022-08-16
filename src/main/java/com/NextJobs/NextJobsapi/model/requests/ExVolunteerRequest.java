@@ -24,15 +24,13 @@ public class ExVolunteerRequest {
 
     private String aboutYourself;
 
-    private Date dob;
+    private String dob;
 
     private String websiteUrl;
 
     private String cvUrl;
 
     private String picUrl;
-
-    private String faceBookUrl;
 
     private String githubUrl;
 
