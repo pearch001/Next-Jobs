@@ -44,7 +44,7 @@ public class ProfilesService {
         var individual = new Individual(individualRequest.getCurrentPosition(),individualRequest.getEducation(),
                 individualRequest.getCountry(),individualRequest.getLocation(), individualRequest.getPhoneNumber(),
                 individualRequest.getAboutYourself(),individualRequest.getDob(), individualRequest.getWebsiteUrl(), individualRequest.getCvUrl(),
-                individualRequest.getFaceBookUrl(), individualRequest.getTwitterUrl(),individualRequest.getLinkedInUrl(),user,
+                individualRequest.getFaceBookUrl(), individualRequest.getGithubUrl(),individualRequest.getLinkedInUrl(),user,
                 individualRequest.getSkills());
         log.info("Saving individual");
         individualDao.save(individual);
@@ -59,7 +59,7 @@ public class ProfilesService {
         var exVolunteer = new ExVolunteer(exVolunteerRequest.getCurrentPosition(),exVolunteerRequest.getEducation(),
                 exVolunteerRequest.getCountry(),exVolunteerRequest.getLocation(), exVolunteerRequest.getPhoneNumber(),
                 exVolunteerRequest.getAboutYourself(),exVolunteerRequest.getDob(), exVolunteerRequest.getWebsiteUrl(), exVolunteerRequest.getCvUrl(),
-                exVolunteerRequest.getFaceBookUrl(), exVolunteerRequest.getTwitterUrl(),exVolunteerRequest.getLinkedInUrl(),user,
+                exVolunteerRequest.getFaceBookUrl(), exVolunteerRequest.getGithubUrl(),exVolunteerRequest.getLinkedInUrl(),user,
                 exVolunteerRequest.getSkills());
 
         log.info("Saving Ex-Volunteer");
