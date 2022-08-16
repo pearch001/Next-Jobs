@@ -19,5 +19,5 @@ public class UserController {
     private AppUserServiceImpl appUserService;
 
     @GetMapping(value = "/get")
-    public userDto countJobs(){ return appUserService.loadUser();}
+    public userDto getUser(){ return appUserService.loadUser();}
 }
