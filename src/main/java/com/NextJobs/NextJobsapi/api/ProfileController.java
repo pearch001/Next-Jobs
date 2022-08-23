@@ -1,5 +1,6 @@
 package com.NextJobs.NextJobsapi.api;
 
+import com.NextJobs.NextJobsapi.model.dtos.ProfileDtos;
 import com.NextJobs.NextJobsapi.model.entities.ExVolunteer;
 import com.NextJobs.NextJobsapi.model.entities.Individual;
 import com.NextJobs.NextJobsapi.model.entities.Job;
@@ -43,4 +44,7 @@ public class ProfileController {
         profilesService.saveExVolunteer(exVolunteerRequest);
         return new ResponseEntity<>(new ApiResponse(true,"Profile created"), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping(value = "/getProfile")
+    public ProfileDtos getProfile() {return profilesService.loadProfile();}
 }
