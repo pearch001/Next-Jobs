@@ -46,5 +46,7 @@ public class ProfileController {
     }
 
     @GetMapping(value = "/getProfile")
-    public ProfileDtos getProfile() {return profilesService.loadProfile();}
+    public ProfileDtos getProfile() {
+        log.info("In the get profile controller");
+        return profilesService.loadProfile();}
 }

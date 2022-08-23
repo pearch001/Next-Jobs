@@ -80,6 +80,7 @@ public class ProfilesService {
     }
 
     public ProfileDtos loadProfile( ){
+        log.info("In the profile service");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = userDetails.getUsername();
@@ -88,6 +89,7 @@ public class ProfilesService {
 
     public ProfileDtos convertToUserDto(AppUser appUser){
         if (appUser.getAppUserRole() == AppUserRole.INDIVIDUAL){
+            log.info("In covert to dto");
             Individual individual = individualDao.findByAppUser(appUser).orElseThrow(()-> new UsernameNotFoundException("User profile not found"));
             return  new ProfileDtos(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getImageUrl(),
                     individual.getCurrentPosition(),individual.getEducation(),individual.getCountry(),individual.getLocation(),

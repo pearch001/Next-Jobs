@@ -88,7 +88,7 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserServiceInt
 
 
         appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
-
+        log.info("Saving user");
         appUserDao.save(appUser);
 
         String token = UUID.randomUUID().toString();
