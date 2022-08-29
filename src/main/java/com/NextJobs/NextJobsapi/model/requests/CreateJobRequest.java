@@ -11,7 +11,7 @@ public class CreateJobRequest {
     private String experience;
     private String skills;
     private String companyName;
-    private String emailAddress;
+    private String companyEmailAddress;
     private String website;
-    private String companyDescription;
+    private String applicationDeadline;
 }

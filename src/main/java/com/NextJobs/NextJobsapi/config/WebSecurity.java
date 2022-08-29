@@ -63,7 +63,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/nextjobs/v1/facebook/signin",
                         "/nextjobs/v1/google/signin",
                         "/nextjobs/v1/linkedIn/signin",
-                        "/configuration/**", "/nextjobs/v1/signup", "/nextjobs/v1/signup/**").permitAll().
+                        "/configuration/**", "/nextjobs/v1/signup", "/nextjobs/v1/signup/**", "/nextjobs/v1/Job/**").permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
                 // make sure we use stateless session; session won't be used to
