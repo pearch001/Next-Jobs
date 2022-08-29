@@ -4,6 +4,7 @@ import com.NextJobs.NextJobsapi.dao.JobDao;
 import com.NextJobs.NextJobsapi.model.dtos.JobDto;
 import com.NextJobs.NextJobsapi.model.entities.Job;
 
+import com.NextJobs.NextJobsapi.model.requests.CreateJobRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,12 @@ public class JobService {
     private final JobDao jobDao;
 
 
-    public Job saveJob(Job job) {
+    public Job saveJob(CreateJobRequest request) {
+
         log.info("Saving Job");
-        return jobDao.save(job);
+        return jobDao.save(new Job(request.getDescription(),request.getTitle(), request.getCompany(), request.getLocation(), request.getExperience(), request.getSkills(), request.getCompanyName(),
+                request.getEmailAddress(), request.getWebsite(),request.getCompanyDescription()));
+
     }
 
     public List<Job> loadJob(int offset) {

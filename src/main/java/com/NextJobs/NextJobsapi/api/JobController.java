@@ -2,6 +2,7 @@ package com.NextJobs.NextJobsapi.api;
 
 
 import com.NextJobs.NextJobsapi.model.entities.Job;
+import com.NextJobs.NextJobsapi.model.requests.CreateJobRequest;
 import com.NextJobs.NextJobsapi.services.JobService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class JobController {
     private JobService jobService;
 
     @PostMapping(value = "/admin/add")
-    public ResponseEntity<Job> addJob(@RequestBody Job job){
+    public ResponseEntity<Job> addJob(@RequestBody CreateJobRequest request){
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/users/job/add").toUriString());
-        return ResponseEntity.created(uri).body(jobService.saveJob(job));
+        return ResponseEntity.created(uri).body(jobService.saveJob(request));
     }
 
     @GetMapping(value = "/{offset}")
