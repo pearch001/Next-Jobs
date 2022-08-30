@@ -6,7 +6,7 @@ import lombok.Data;
 public class CreateJobRequest {
     private String description;
     private String title;
-    private String company;
+    private String type;
     private String location;
     private String experience;
     private String skills;

@@ -36,10 +36,10 @@ public class Job {
 
     private String applicationDeadline;
 
-    public Job(String description, String title, String company, String location, String experience, String skills, String companyName, String emailAddress, String website, String applicationDeadline) {
+    public Job(String description, String title, String type, String location, String experience, String skills, String companyName, String emailAddress, String website, String applicationDeadline) {
         this.description = description;
         this.title = title;
-        this.company = company;
+        this.type = type;
         this.location = location;
         this.experience = experience;
         this.skills = skills;

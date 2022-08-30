@@ -24,7 +24,7 @@ public class JobService {
     public Job saveJob(CreateJobRequest request) {
 
         log.info("Saving Job");
-        return jobDao.save(new Job(request.getDescription(),request.getTitle(), request.getCompany(), request.getLocation(), request.getExperience(), request.getSkills(), request.getCompanyName(),
+        return jobDao.save(new Job(request.getDescription(),request.getTitle(), request.getType(), request.getLocation(), request.getExperience(), request.getSkills(), request.getCompanyName(),
                 request.getCompanyEmailAddress(), request.getWebsite(),request.getApplicationDeadline()));
 
     }
