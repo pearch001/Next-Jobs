@@ -24,28 +24,29 @@ public class Job {
     private String title;
 
     private String type;
-    private String company;
+
     private String location;
     @CreationTimestamp
     private Date dateCreated;
     private String experience;
     private String skills;
-    private String companyName;
-    private String companyEmailAddress;
-    private String website;    
-
     private String applicationDeadline;
 
-    public Job(String description, String title, String type, String location, String experience, String skills, String companyName, String emailAddress, String website, String applicationDeadline) {
+    @OneToOne
+    @JoinColumn(
+            nullable = false,
+            name = "organization_id"
+    )
+    private Organisation organization;
+
+    public Job(String description, String title, String type, String location, String experience, String skills, String applicationDeadline, Organisation organisation) {
         this.description = description;
         this.title = title;
         this.type = type;
         this.location = location;
         this.experience = experience;
         this.skills = skills;
-        this.companyName = companyName;
-        this.companyEmailAddress = emailAddress;
-        this.website = website;
         this.applicationDeadline = applicationDeadline;
+        this.organization = organisation;
     }
 }

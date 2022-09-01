@@ -2,11 +2,17 @@ package com.NextJobs.NextJobsapi.services;
 
 import com.NextJobs.NextJobsapi.dao.JobDao;
 import com.NextJobs.NextJobsapi.model.dtos.JobDto;
+import com.NextJobs.NextJobsapi.model.entities.AppUser;
 import com.NextJobs.NextJobsapi.model.entities.Job;
 
+import com.NextJobs.NextJobsapi.model.entities.Organisation;
 import com.NextJobs.NextJobsapi.model.requests.CreateJobRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +26,27 @@ import java.util.List;
 public class JobService {
     private final JobDao jobDao;
 
+    @Autowired
+    private AppUserServiceImpl appUserService;
+
+    @Autowired
+    private ProfilesService profilesService;
+
+
 
     public Job saveJob(CreateJobRequest request) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+
+        AppUser user = appUserService.loadUserByEmail(username);
+
+        var organization = profilesService.getOrgaizationFromUser(user);
 
         log.info("Saving Job");
-        return jobDao.save(new Job(request.getDescription(),request.getTitle(), request.getType(), request.getLocation(), request.getExperience(), request.getSkills(), request.getCompanyName(),
-                request.getCompanyEmailAddress(), request.getWebsite(),request.getApplicationDeadline()));
+        return jobDao.save(new Job(request.getDescription(),request.getTitle(),request.getType(),request.getLocation(), request.getExperience(), request.getSkills(),
+                request.getApplicationDeadline(), organization));
+
 
     }
 

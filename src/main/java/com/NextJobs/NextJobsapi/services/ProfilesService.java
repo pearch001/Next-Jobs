@@ -4,14 +4,14 @@ import com.NextJobs.NextJobsapi.dao.AppUserDao;
 import com.NextJobs.NextJobsapi.dao.ExVolunteerDao;
 import com.NextJobs.NextJobsapi.dao.IndividualDao;
 import com.NextJobs.NextJobsapi.dao.OrganizationDao;
+import com.NextJobs.NextJobsapi.exceptions.InternalServerException;
 import com.NextJobs.NextJobsapi.exceptions.UserExistException;
+import com.NextJobs.NextJobsapi.model.dtos.OrganizationProfileDtos;
 import com.NextJobs.NextJobsapi.model.dtos.ProfileDtos;
 import com.NextJobs.NextJobsapi.model.dtos.userDto;
-import com.NextJobs.NextJobsapi.model.entities.AppUser;
-import com.NextJobs.NextJobsapi.model.entities.ExVolunteer;
-import com.NextJobs.NextJobsapi.model.entities.Individual;
-import com.NextJobs.NextJobsapi.model.entities.Job;
+import com.NextJobs.NextJobsapi.model.entities.*;
 import com.NextJobs.NextJobsapi.model.enums.AppUserRole;
+import com.NextJobs.NextJobsapi.model.requests.CreateOrganizationRequest;
 import com.NextJobs.NextJobsapi.model.requests.ExVolunteerRequest;
 import com.NextJobs.NextJobsapi.model.requests.IndividualRequest;
 import lombok.RequiredArgsConstructor;
@@ -79,12 +79,43 @@ public class ProfilesService {
         exVolunteerDao.save(exVolunteer);
     }
 
+    public void saveOrganization(CreateOrganizationRequest organizationRequest) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        AppUser user = appUserService.loadUserByEmail(username);
+        if (!(user.getAppUserRole() == AppUserRole.NEWUSER)){
+            throw new UserExistException("User profile created");
+        }
+        user.setAppUserRole(AppUserRole.ExVOLUNTEER);
+        var organization = Organisation.builder().appUser(user)
+                .email(organizationRequest.getEmail())
+                .country(organizationRequest.getCountry())
+                .description(organizationRequest.getDescription())
+                .name(organizationRequest.getName())
+                .location(organizationRequest.getLocation())
+                .phone(organizationRequest.getPhone())
+                .website(organizationRequest.getWebsite())
+                .build();
+
+        log.info("Saving Ex-Volunteer");
+        organizationDao.save(organization);
+    }
+
     public ProfileDtos loadProfile( ){
         log.info("In the profile service");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = userDetails.getUsername();
         return convertToUserDto(appUserService.loadUserByEmail(email));
+    }
+
+    public OrganizationProfileDtos loadOrganizationProfile( ){
+        log.info("In the profile service");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = userDetails.getUsername();
+        return convertToOrganizationProfileDto(appUserService.loadUserByEmail(email));
     }
 
     public ProfileDtos convertToUserDto(AppUser appUser){
@@ -106,10 +137,29 @@ public class ProfilesService {
                     exVolunteer.getPhoneNumber(),exVolunteer.getAboutYourself(),exVolunteer.getDob(),exVolunteer.getWebsiteUrl(),exVolunteer.getCvUrl(),
                     exVolunteer.getGithubUrl(),exVolunteer.getLinkedInUrl());
         }else {
-            return null;
+            throw new InternalServerException("No profile for user");
+
+
+        }
         }
 
+    public OrganizationProfileDtos convertToOrganizationProfileDto(AppUser appUser){
+        if(appUser.getAppUserRole() == AppUserRole.ORGANIZATION){
+            Organisation organisation = organizationDao.findByAppUser(appUser).orElseThrow(()-> new UsernameNotFoundException("User profile not found"));
+            return  new OrganizationProfileDtos(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getImageUrl(),
+                    organisation.getName(), organisation.getEmail(), organisation.getPhone(),organisation.getCountry(), organisation.getLocation(),
+                    organisation.getWebsite(), organisation.getDescription());
+
+        }else{
+            throw new InternalServerException("No profile for user");
+        }
+
+
     }
+    public Organisation getOrgaizationFromUser(AppUser user){
+        return organizationDao.findByAppUser(user).orElseThrow(()-> new UsernameNotFoundException("User profile not found"));
+    }
+
 
 
 }

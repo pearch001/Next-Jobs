@@ -17,10 +17,19 @@ public class Organisation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String organisationDescription;
+    private String name;
 
-    private int yearsOfExistence;
+    private String email;
 
+    private String phone;
+
+    private String country;
+
+    private String location;
+
+    private String website;
+
+    private String description;
 
     @OneToOne
     @JoinColumn(
