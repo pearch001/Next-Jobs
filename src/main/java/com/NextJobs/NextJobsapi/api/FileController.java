@@ -30,8 +30,8 @@ public class FileController {
 
     @PostMapping("/picture/upload")
     public ResponseEntity<ApiResponse> uploadPicture(@RequestParam(value = "file") MultipartFile file,
-                                                     @RequestHeader(value = "Authorization") String authorizationHeader) {
-        String email = jwtTokenUtil.getUsernameFromToken(authorizationHeader.substring(7));
+                                                     @RequestParam(value = "email") String email) {
+
         String filename =  email + "image";
         storageService.uploadFile(file,filename,email);
         appUserService.addImageUrl(email, "https://next-jobs.s3.amazonaws.com/" + filename);
@@ -40,8 +40,8 @@ public class FileController {
 
     @PostMapping("/cv/upload")
     public ResponseEntity<String> uploadCv(@RequestParam(value = "file") MultipartFile file,
-                                           @RequestHeader(value = "Authorization") String authorizationHeader) {
-        String email = jwtTokenUtil.getUsernameFromToken(authorizationHeader.substring(7));
+                                           @RequestParam(value = "email") String email) {
+
         String filename =  email + "CV";
         return new ResponseEntity<>(storageService.uploadFile(file,filename,email), HttpStatus.OK);
     }
