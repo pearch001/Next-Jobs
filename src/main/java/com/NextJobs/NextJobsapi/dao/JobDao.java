@@ -21,14 +21,11 @@ public interface JobDao extends CrudRepository<Job,Long> {
     List<Job> selectByOffset(int id);
 
     @Query(value = "SELECT * FROM job " +
-            "WHERE title LIKE '%' + ?1 + '%' AND " +
-            "state LIKE '%' + ?2 + '%' AND " +
-            "salary_upper_bound >= ?3 ORDER BY id OFFSET ?4 ROWS FETCH NEXT 10 ROWS ONLY", nativeQuery = true)
+            "WHERE title LIKE '%' + ?1 + '%' " +
+             "ORDER BY id OFFSET ?4 ROWS FETCH NEXT 10 ROWS ONLY", nativeQuery = true)
     List<Job> searchJobs(String jobTitle, String state, Long salaryBound, int offset);
 
     @Query(value = "SELECT COUNT(id) FROM job " +
-            "WHERE title LIKE '%' + ?1 + '%' AND " +
-            "state LIKE '%' + ?2 + '%' AND " +
-            "salary_upper_bound >= ?3 ", nativeQuery = true)
+            "WHERE title LIKE '%' + ?1 + '%' ", nativeQuery = true)
     int allSearchedJobs(String jobTitle, String state, Long salaryBound);
 }
