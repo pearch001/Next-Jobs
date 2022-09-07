@@ -87,7 +87,7 @@ public class ProfilesService {
         if (!(user.getAppUserRole() == AppUserRole.NEWUSER)){
             throw new UserExistException("User profile created");
         }
-        user.setAppUserRole(AppUserRole.ExVOLUNTEER);
+        user.setAppUserRole(AppUserRole.ORGANIZATION);
         var organization = Organisation.builder().appUser(user)
                 .email(organizationRequest.getEmail())
                 .country(organizationRequest.getCountry())
@@ -158,6 +158,15 @@ public class ProfilesService {
     }
     public Organisation getOrgaizationFromUser(AppUser user){
         return organizationDao.findByAppUser(user).orElseThrow(()-> new UsernameNotFoundException("User profile not found"));
+    }
+
+    public String getProfileStatus(){
+        log.info("In the profile service");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = userDetails.getUsername();
+        AppUser appUser =appUserService.loadUserByEmail(email);
+        return appUser.getAppUserRole().name();
     }
 
 

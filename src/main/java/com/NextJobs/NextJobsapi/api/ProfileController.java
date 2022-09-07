@@ -61,6 +61,11 @@ public class ProfileController {
         log.info("In the get profile controller");
         return profilesService.loadProfile();}
 
+    @GetMapping(value = "/getProfileStatus")
+    public String getProfileStatus() {
+        log.info("In the get profile status controller");
+        return profilesService.getProfileStatus();}
+
     @GetMapping(value = "/Organization/getProfile")
     public OrganizationProfileDtos getOrganizationProfile() {
         log.info("In the get profile controller");
