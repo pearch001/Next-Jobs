@@ -20,10 +20,8 @@ public interface JobDao extends CrudRepository<Job,Long> {
     @Query(value = "SELECT * FROM job ORDER BY id OFFSET ?1 ROWS FETCH NEXT 10 ROWS ONLY", nativeQuery = true)
     List<Job> selectByOffset(int id);
 
-    @Query(value = "SELECT * FROM job " +
-            "WHERE title LIKE '%' + ?1 + '%' " +
-             "ORDER BY id OFFSET ?4 ROWS FETCH NEXT 10 ROWS ONLY", nativeQuery = true)
-    List<Job> searchJobs(String jobTitle, String state, Long salaryBound, int offset);
+
+    List<Job> searchAllByTitleContainingIgnoreCase(String jobTitle);
 
     @Query(value = "SELECT COUNT(id) FROM job " +
             "WHERE title LIKE '%' + ?1 + '%' ", nativeQuery = true)

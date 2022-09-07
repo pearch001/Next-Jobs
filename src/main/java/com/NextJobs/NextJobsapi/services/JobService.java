@@ -69,7 +69,7 @@ public class JobService {
         if (salaryBound == null){
             salaryBound = Long.MIN_VALUE;
         }
-            return (List<Job>) jobDao.searchJobs(jobTitle, city, salaryBound, offset);
+            return (List<Job>) jobDao.searchAllByTitleContainingIgnoreCase(jobTitle);
     }
 
 
